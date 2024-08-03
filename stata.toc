@@ -1,0 +1,32 @@
+{smcl}
+{txt}{sf}{ul off}
+{.-}
+{s6hlp}
+package ^impcde^ from https://github.com/causalMedAnalysis/impcde
+{smcl}
+{.-}
+{s6hlp}
+
+{smcl}
+{hilite:TITLE}{p 6 8}'IMPCDE': module to estimate controlled direct effects using regression imputation{p_end}
+{s6hlp}
+
+^DESCRIPTION/AUTHOR(S)^
+      
+impcde estimates controlled direct effects using regression imputation. A single model for the outcome is fit conditional 
+on treatment, the mediator, and baseline covariates (if specified). This model may be a linear, logistic, or poisson regression.
+      
+Requires: Stata version 15
+      
+Distribution-Date: 20240711
+      
+Author: Geoff Wodtke, University of Chicago
+Support: email wodtke@@uchicago.edu
+      
+
+^INSTALLATION FILES^                              (type ^net install^ ^impcde^)
+      impcde.ado
+	  impcdebs.ado
+      impcde.sthlp
+
+{txt}{sf}{ul off}

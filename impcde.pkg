@@ -1,0 +1,16 @@
+d 'IMPCDE': module to estimate controlled direct effects using regression imputation
+d
+d impcde estimates controlled direct effects using regression imputation. A single model for the outcome is fit conditional 
+d on treatment, the mediator, and baseline covariates (if specified). This model may be a linear, logistic, or poisson regression.
+d      
+d
+d Requires: Stata version 15
+d
+d Distribution-Date: 20240711
+d
+d Author: Geoff Wodtke, University of Chicago
+d Support: email wodtke@@uchicago.edu
+d
+f impcde.ado
+f impcdebs.ado
+f impcde.sthlp

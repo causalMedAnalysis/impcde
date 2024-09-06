@@ -5,12 +5,12 @@
 ## Syntax
 
 ```stata
-impcde varname, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(string) [options]
+impcde depvar, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(string) [options]
 ```
 
 ### Required Arguments
 
-- `varname`: Specifies the outcome variable.
+- `depvar`: Specifies the outcome variable.
 - `dvar(varname)`: Specifies the treatment (exposure) variable.
 - `mvar(varname)`: Specifies the mediator variable.
 - `d(real)`: Reference level of treatment.
@@ -29,7 +29,7 @@ impcde varname, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(str
 - `cluster(varname)`: Identifies resampling clusters.
 - `level(cilevel)`: Confidence level for bootstrap confidence intervals, default is 95%.
 - `seed(passthru)`: Seed for bootstrap resampling.
-- `detail`: Prints the fitted outcome model in addition to the estimated CDE.
+- `detail`: Prints the fitted outcome model.
 
 ## Description
 
@@ -56,7 +56,7 @@ impcde std_cesd_age40, dvar(att22) mvar(ever_unemp_age3539) cvars(female black h
 `impcde` saves the following results in `e()`:
 
 - **Matrices**:
-  - `e(b)`: Scalar containing the controlled direct effect estimate.
+  - `e(b)`: Matrix containing the controlled direct effect estimate.
 
 ## Author
 

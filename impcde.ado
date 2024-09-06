@@ -8,7 +8,7 @@ program define impcde, eclass
 
 	version 15	
 
-	syntax varname(numeric) [if][in] [pweight], ///
+	syntax varlist(min=1 max=1 numeric) [if][in] [pweight], ///
 		dvar(varname numeric) ///
 		mvar(varname numeric) ///
 		d(real) ///
@@ -33,6 +33,42 @@ program define impcde, eclass
 		if r(N) == 0 error 2000
 	}
 
+	local yregtypes regress logit poisson 
+	local nyreg : list posof "`yreg'" in yregtypes
+	if !`nyreg' {
+		display as error "Error: yreg must be chosen from: `yregtypes'."
+		error 198		
+	}
+
+	if ("`detail'" != "") {		
+	
+		local yvar `varlist'
+	
+		if ("`nointeraction'" == "") {
+			tempvar inter
+			gen `inter' = `dvar' * `mvar' if `touse'
+		}
+
+		if ("`cxd'"!="") {	
+			foreach c in `cvars' {
+				tempvar `dvar'X`c'
+				gen ``dvar'X`c'' = `dvar' * `c' if `touse'
+				local cxd_vars `cxd_vars'  ``dvar'X`c''
+			}
+		}
+
+		if ("`cxm'"!="") {	
+			foreach c in `cvars' {
+				tempvar `mvar'X`c'
+				gen ``mvar'X`c'' = `mvar' * `c' if `touse'
+				local cxm_vars `cxm_vars'  ``mvar'X`c''
+			}
+		}
+	
+		`yreg' `yvar' `dvar' `mvar' `inter' `cvars' `cxd_vars' `cxm_vars' [`weight' `exp'] if `touse'
+	
+	}
+		
 	if ("`saving'" != "") {
 		bootstrap CDE=r(cde), force ///
 			reps(`reps') strata(`strata') cluster(`cluster') level(`level') `seed' ///
@@ -40,7 +76,7 @@ program define impcde, eclass
 			impcdebs `varlist' if `touse' [`weight' `exp'], ///
 			dvar(`dvar') mvar(`mvar') cvars(`cvars') ///
 			d(`d') dstar(`dstar') m(`m') yreg(`yreg') `nointeraction' `cxd' `cxm'
-			}
+	}
 
 	if ("`saving'" == "") {
 		bootstrap CDE=r(cde), force ///
@@ -49,37 +85,8 @@ program define impcde, eclass
 			impcdebs `varlist' if `touse' [`weight' `exp'], ///
 			dvar(`dvar') mvar(`mvar') cvars(`cvars') ///
 			d(`d') dstar(`dstar') m(`m') yreg(`yreg') `nointeraction' `cxd' `cxm'
-			}
+	}
 			
 	estat bootstrap, p noheader
 	
-	if ("`detail'" != "") {		
-	
-		local yvar `varlist'
-	
-		if ("`nointeraction'" == "") {
-			tempvar inter
-			gen `inter' = `dvar' * `mvar' if `touse'
-			}
-
-		if ("`cxd'"!="") {	
-			foreach c in `cvars' {
-				tempvar `dvar'X`c'
-				gen ``dvar'X`c'' = `dvar' * `c' if `touse'
-				local cxd_vars `cxd_vars'  ``dvar'X`c''
-				}
-			}
-
-		if ("`cxm'"!="") {	
-			foreach c in `cvars' {
-				tempvar `mvar'X`c'
-				gen ``mvar'X`c'' = `mvar' * `c' if `touse'
-				local cxm_vars `cxm_vars'  ``mvar'X`c''
-				}
-			}
-	
-		`yreg' `yvar' `dvar' `mvar' `inter' `cvars' `cxd_vars' `cxm_vars' [`weight' `exp'] if `touse'
-	
-		}
-
 end impcde

@@ -13,11 +13,25 @@
 {title:Syntax}
 
 {p 8 18 2}
-{cmd:impcde} {varname} {ifin} [{it:{help weight:pweight}}] {cmd:,} dvar({varname}) mvar({varname}) 
-d({it:real}) dstar({it:real}) m({it:real}) yreg(string) [cvars({varlist})) {opt nointer:action} {opt cxd} {opt cxm} 
-{reps({it:integer 200}) strata({varname}) cluster({varname}) level(cilevel) seed({it:passthru})]
+{cmd:impcde} {depvar} {ifin} [{it:{help weight:pweight}}] {cmd:,} 
+{opt dvar(varname)} 
+{opt mvar(varname)} 
+{opt d(real)} 
+{opt dstar(real)} 
+{opt m(real)} 
+{opt yreg(string)} 
+{opt cvars(varlist)} 
+{opt nointer:action} 
+{opt cxd} 
+{opt cxm} 
+{opt reps(integer 200)} 
+{opt strata(varname)} 
+{opt cluster(varname)} 
+{opt level(cilevel)} 
+{opt seed(passthru)}
+{opt detail}
 
-{phang}{opt varname} - this specifies the outcome variable.
+{phang}{opt depvar} - this specifies the outcome variable.
 
 {phang}{opt dvar(varname)} - this specifies the treatment (exposure) variable.
 
@@ -32,8 +46,8 @@ the treatment contrast of interest.
 is evaluated. If there is no treatment-mediator interaction, then the controlled direct effect
 is the same at all levels of the mediator and thus an arbitary value can be chosen.
 
-{phang}{opt yreg}{cmd:(}{it:string}{cmd:)}}specify the form of regression model to be estimated for the outcome. 
-Options are {opt reg:ress}, {opt log:it}, or {opt poi:sson}.
+{phang}{opt yreg}{cmd:(}{it:string}{cmd:)}} - this specifies the form of regression model to be estimated for the outcome. 
+Options are {opt regress}, {opt logit}, or {opt poisson}.
 
 {title:Options}
 
@@ -63,7 +77,7 @@ option is omitted, then the default level of 95% is used.
 {phang}{opt seed(passthru)} - this option specifies the seed for bootstrap resampling. If this option is omitted, then a random 
 seed is used and the results cannot be replicated. {p_end}
 
-{phang}{opt detail} - this option prints the fitted model for outcome in addition to the estimated CDE.
+{phang}{opt detail} - this option prints the fitted model for outcome.
 
 {title:Description}
 
@@ -110,7 +124,7 @@ University of Chicago{p_end}
 
 {title:References}
 
-{pstd}Wodtke GT, Zhou X, and Elwert F. Causal Mediation Analysis. In preparation. {p_end}
+{pstd}Wodtke GT, and Zhou X. Causal Mediation Analysis. In preparation. {p_end}
 
 {title:Also see}
 

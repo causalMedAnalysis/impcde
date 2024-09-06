@@ -110,7 +110,7 @@ on treatment, the mediator, and baseline covariates (if specified). This model m
 
 {synoptset 15 tabbed}{...}
 {p2col 5 15 19 2: Matrices}{p_end}
-{synopt:{cmd:e(b)}}scalar containing the controlled direct effect estimate{p_end}
+{synopt:{cmd:e(b)}}Matrix containing the controlled direct effect estimate{p_end}
 
 
 {title:Author}

@@ -59,7 +59,7 @@ program define impcdebs, rclass
 	
 	di ""
 	di "Model for `yvar' conditional on {cvars `dvar' `mvar'}:"
-	qui `yreg' `yvar' `dvar' `mvar' `cvars' `inter' `cxd_vars' `cxm_vars' [`weight' `exp'] if `touse'
+	`yreg' `yvar' `dvar' `mvar' `inter' `cvars' `cxd_vars' `cxm_vars' [`weight' `exp'] if `touse'
 		
 	qui replace `mvar'=`m'
 	qui replace `dvar'=`d'

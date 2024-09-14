@@ -1,4 +1,4 @@
-# impcde: Estimating Controlled Direct Effects Using Regression Imputation
+# impcde: A Stata Module to Estimate Controlled Direct Effects Using Regression Imputation
 
 `impcde` is a Stata module designed to estimate controlled direct effects (CDE) using regression imputation.
 
@@ -24,16 +24,13 @@ impcde depvar, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(stri
 - `nointer`: Excludes treatment-mediator interaction in the outcome model.
 - `cxd`: Includes all two-way interactions between the treatment and baseline covariates.
 - `cxm`: Includes all two-way interactions between the mediator and baseline covariates.
-- `reps(integer)`: Number of bootstrap replications, default is 200.
-- `strata(varname)`: Identifies resampling strata.
-- `cluster(varname)`: Identifies resampling clusters.
-- `level(cilevel)`: Confidence level for bootstrap confidence intervals, default is 95%.
-- `seed(passthru)`: Seed for bootstrap resampling.
 - `detail`: Prints the fitted outcome model.
 
 ## Description
 
-`impcde` fits a single model for the outcome conditional on treatment, the mediator, and baseline covariates. This model can be a linear, logistic, or poisson regression, depending on the specification. This module is used to construct regression imputation estimates for the controlled direct effect.
+`impcde` fits a single model for the outcome conditional on treatment, the mediator, and baseline covariates. This model can be a linear, logistic, or poisson regression. The outcome model is then used to construct regression imputation estimates for the controlled direct effect.
+
+If using `pweights` from a complex sample design that require rescaling to produce valid boostrap estimates, be sure to appropriately specify the `strata`, `cluster`, and `size` options from the `bootstrap` command so that Nc-1 clusters are sampled from each stratum with replacement, where Nc denotes the number of clusters per stratum. Failing to properly adjust the bootstrap procedure to account for a complex sample design and its associated sampling weights could lead to invalid inferential statistics.
 
 ## Examples
 
@@ -42,12 +39,12 @@ impcde depvar, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(stri
 use nlsy79.dta
 
 // Default settings with no interaction
-impcde std_cesd_age40, dvar(att22) mvar(ever_unemp_age3539) cvars(female black hispan paredu parprof parinc_prank famsize afqt3) d(1) dstar(0) m(0) yreg(regress) nointer reps(1000)
+impcde std_cesd_age40, dvar(att22) mvar(ever_unemp_age3539) cvars(female black hispan paredu parprof parinc_prank famsize afqt3) d(1) dstar(0) m(0) yreg(regress) nointer
 
-// Include treatment-mediator interaction
+// Include treatment-mediator interaction and 1000 bootstrap replications
 impcde std_cesd_age40, dvar(att22) mvar(ever_unemp_age3539) cvars(female black hispan paredu parprof parinc_prank famsize afqt3) d(1) dstar(0) m(0) yreg(regress) reps(1000)
 
-// Include all two-way interactions
+// Additionally include all two-way interactions between the exposure and covariates
 impcde std_cesd_age40, dvar(att22) mvar(ever_unemp_age3539) cvars(female black hispan paredu parprof parinc_prank famsize afqt3) d(1) dstar(0) m(0) yreg(regress) cxd reps(1000)
 ```
 
@@ -72,7 +69,7 @@ Email: [wodtke@uchicago.edu](mailto:wodtke@uchicago.edu)
 
 ## Also See
 
-- [regress R](#)
-- [logit R](#)
-- [poisson R](#)
-- [bootstrap R](#)
+- [regress](#)
+- [logit](#)
+- [poisson](#)
+- [bootstrap](#)

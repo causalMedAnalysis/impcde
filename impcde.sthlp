@@ -68,7 +68,7 @@ included in the outcome model.
 {pstd}{cmd:impcde} estimates controlled direct effects using regression imputation. A single model for the outcome is fit conditional 
 on treatment, the mediator, and baseline covariates (if specified). This model may be a linear, logistic, or poisson regression.
 
-{pstd}{cmd:impcde} provides an estimate of the controlled direct effect.{p_end}
+{pstd}{cmd:impcde} provides an estimate of the controlled direct effect. Inferential statistics are computed using the nonparametric bootstrap.{p_end}
 
 {pstd}If using {help pweights} from a complex sample design that require rescaling to produce valid boostrap estimates, be sure to appropriately 
 specify the strata(), cluster(), and size() options from the {help bootstrap} command so that Nc-1 clusters are sampled from each stratum 

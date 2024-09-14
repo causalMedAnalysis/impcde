@@ -25,10 +25,11 @@ impcde depvar, dvar(varname) mvar(varname) d(real) dstar(real) m(real) yreg(stri
 - `cxd`: Includes all two-way interactions between the treatment and baseline covariates.
 - `cxm`: Includes all two-way interactions between the mediator and baseline covariates.
 - `detail`: Prints the fitted outcome model.
+- `bootstrap_options: All `bootstrap` options are available.
 
 ## Description
 
-`impcde` fits a single model for the outcome conditional on treatment, the mediator, and baseline covariates. This model can be a linear, logistic, or poisson regression. The outcome model is then used to construct regression imputation estimates for the controlled direct effect.
+`impcde` fits a single model for the outcome conditional on treatment, the mediator, and baseline covariates. This model can be a linear, logistic, or poisson regression. The outcome model is then used to construct regression imputation estimates for the controlled direct effect. Inferential statistics are computed using the nonparametric bootstrap.
 
 If using `pweights` from a complex sample design that require rescaling to produce valid boostrap estimates, be sure to appropriately specify the `strata`, `cluster`, and `size` options from the `bootstrap` command so that Nc-1 clusters are sampled from each stratum with replacement, where Nc denotes the number of clusters per stratum. Failing to properly adjust the bootstrap procedure to account for a complex sample design and its associated sampling weights could lead to invalid inferential statistics.
 

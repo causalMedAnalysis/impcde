@@ -31,32 +31,34 @@ program define impcdebs, rclass
 	
 	if ("`nointeraction'" == "") {
 		tempvar inter
-		gen `inter' = `dvar' * `mvar' if `touse'
-		}
+		qui gen `inter' = `dvar' * `mvar' if `touse'
+	}
 
 	if ("`cxd'"!="") {	
 		foreach c in `cvars' {
 			tempvar `dvar'X`c'
-			gen ``dvar'X`c'' = `dvar' * `c' if `touse'
+			qui gen ``dvar'X`c'' = `dvar' * `c' if `touse'
 			local cxd_vars `cxd_vars'  ``dvar'X`c''
-			}
 		}
+	}
 
 	if ("`cxm'"!="") {	
 		foreach c in `cvars' {
 			tempvar `mvar'X`c'
-			gen ``mvar'X`c'' = `mvar' * `c' if `touse'
+			qui gen ``mvar'X`c'' = `mvar' * `c' if `touse'
 			local cxm_vars `cxm_vars'  ``mvar'X`c''
-			}
 		}
+	}
 
 
 	tempvar `dvar'_orig_r001
-	gen ``dvar'_orig_r001' = `dvar' if `touse'
+	qui gen ``dvar'_orig_r001' = `dvar' if `touse'
 
 	tempvar `mvar'_orig_r001
-	gen ``mvar'_orig_r001' = `mvar' if `touse'
+	qui gen ``mvar'_orig_r001' = `mvar' if `touse'
 	
+	di ""
+	di "Model for `yvar' conditional on {cvars `dvar' `mvar'}:"
 	qui `yreg' `yvar' `dvar' `mvar' `cvars' `inter' `cxd_vars' `cxm_vars' [`weight' `exp'] if `touse'
 		
 	qui replace `mvar'=`m'
@@ -65,14 +67,14 @@ program define impcdebs, rclass
 	if ("`cxd'"!="") {	
 		foreach c in `cvars' {
 			qui replace ``dvar'X`c'' = `dvar' * `c' if `touse'
-			}
-		}	
+		}
+	}	
 
 	if ("`cxm'"!="") {	
 		foreach c in `cvars' {
 			qui replace ``mvar'X`c'' = `mvar' * `c' if `touse'
-			}
 		}
+	}
 
 	tempvar Ydm
 	qui predict `Ydm'
@@ -82,14 +84,14 @@ program define impcdebs, rclass
 	if ("`cxd'"!="") {	
 		foreach c in `cvars' {
 			qui replace ``dvar'X`c'' = `dvar' * `c' if `touse'
-			}
-		}		
+		}
+	}		
 
 	tempvar Ydstarm
 	qui predict `Ydstarm'
 
 	tempvar CDEgivenC
-	gen `CDEgivenC' = `Ydm' - `Ydstarm'
+	qui gen `CDEgivenC' = `Ydm' - `Ydstarm'
 		
 	qui reg `CDEgivenC' [`weight' `exp'] if `touse'
 		

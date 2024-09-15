@@ -63,6 +63,10 @@ program define impcdebs, rclass
 		
 	qui replace `mvar'=`m'
 	qui replace `dvar'=`d'
+
+	if ("`nointeraction'" == "") {
+		qui replace `inter' = `dvar' * `mvar' if `touse'
+	}
 	
 	if ("`cxd'"!="") {	
 		foreach c in `cvars' {
@@ -87,6 +91,10 @@ program define impcdebs, rclass
 	}
 	
 	qui replace `dvar'=`dstar'
+	
+	if ("`nointeraction'" == "") {
+		qui replace `inter' = `dvar' * `mvar' if `touse'
+	}
 	
 	if ("`cxd'"!="") {	
 		foreach c in `cvars' {

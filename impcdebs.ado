@@ -77,8 +77,15 @@ program define impcdebs, rclass
 	}
 
 	tempvar Ydm
-	qui predict `Ydm'
-		
+	
+	if ("`yreg'"=="regress" | "`yreg'"=="poisson") {
+		qui predict `Ydm'
+	}
+
+	if ("`yreg'"=="logit") {
+		qui predict `Ydm', pr
+	}
+	
 	qui replace `dvar'=`dstar'
 	
 	if ("`cxd'"!="") {	
@@ -88,8 +95,15 @@ program define impcdebs, rclass
 	}		
 
 	tempvar Ydstarm
-	qui predict `Ydstarm'
+	
+	if ("`yreg'"=="regress" | "`yreg'"=="poisson") {
+		qui predict `Ydstarm'
+	}
 
+	if ("`yreg'"=="logit") {
+		qui predict `Ydstarm', pr
+	}
+	
 	tempvar CDEgivenC
 	qui gen `CDEgivenC' = `Ydm' - `Ydstarm'
 		
